@@ -1,8 +1,8 @@
 <script>
   import { IconCardsFilled, IconUser } from "@tabler/icons-svelte";
+  import NavLink from "./nav-link.svelte";
 
-  let activeTab = "home";
-  let userMenuOpen = false;
+  let userMenuOpen = $state(false);
 </script>
 
 <!-- Top Navigation -->
@@ -18,15 +18,15 @@
 
       <!-- Navigation Links -->
       <div class="nav-links">
-        <button on:click={() => (activeTab = "home")} class="nav-link {activeTab === 'home' ? 'active' : ''}"> Home </button>
-        <button on:click={() => (activeTab = "inventory")} class="nav-link {activeTab === 'inventory' ? 'active' : ''}"> Inventory </button>
-        <button on:click={() => (activeTab = "builder")} class="nav-link {activeTab === 'builder' ? 'active' : ''}"> Deck Builder </button>
+        <NavLink href="/">Home</NavLink>
+        <NavLink href="/inventory">Inventory</NavLink>
+        <NavLink href="/deck-builder">Deck Builder</NavLink>
       </div>
     </div>
 
     <!-- User Menu -->
     <div class="user-menu-wrapper">
-      <button on:click={() => (userMenuOpen = !userMenuOpen)} class="user-avatar">
+      <button onclick={() => (userMenuOpen = !userMenuOpen)} class="user-avatar">
         <div class="avatar-circle">
           <IconUser size={20} class="avatar-icon" />
         </div>
@@ -95,30 +95,6 @@
     display: flex;
     align-items: center;
     gap: var(--space-xs);
-  }
-
-  .nav-link {
-    padding: var(--space-sm) var(--space-md);
-    border-radius: var(--radius);
-    font-size: 0.875rem;
-    font-weight: 500;
-    color: var(--color-text-muted);
-    background: transparent;
-    border: none;
-    cursor: pointer;
-    transition: var(--transition);
-  }
-
-  .nav-link:hover {
-    color: var(--color-text);
-    background: var(--color-bg);
-    transform: none;
-    box-shadow: none;
-  }
-
-  .nav-link.active {
-    background: var(--color-bg);
-    color: var(--color-text);
   }
 
   /* User Menu */
