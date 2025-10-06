@@ -3,6 +3,62 @@ import { pgTable, text, integer, timestamp, boolean, jsonb, uuid, primaryKey, in
 import { relations } from "drizzle-orm";
 
 // ============================================
+// BETTER AUTH TABLES
+// ============================================
+export const user = pgTable("user", {
+  id: text("id").primaryKey(),
+  name: text("name").notNull(),
+  email: text("email").notNull().unique(),
+  emailVerified: boolean("emailVerified").notNull(),
+  image: text("image"),
+  createdAt: timestamp("createdAt").notNull(),
+  updatedAt: timestamp("updatedAt").notNull(),
+
+  // DraftBox custom fields
+  dustBalance: integer("dust_balance").notNull().default(0),
+});
+
+export const session = pgTable("session", {
+  id: text("id").primaryKey(),
+  expiresAt: timestamp("expiresAt").notNull(),
+  token: text("token").notNull().unique(),
+  createdAt: timestamp("createdAt").notNull(),
+  updatedAt: timestamp("updatedAt").notNull(),
+  ipAddress: text("ipAddress"),
+  userAgent: text("userAgent"),
+  userId: text("userId")
+    .notNull()
+    .references(() => user.id),
+});
+
+export const account = pgTable("account", {
+  id: text("id").primaryKey(),
+  accountId: text("accountId").notNull(),
+  providerId: text("providerId").notNull(),
+  userId: text("userId")
+    .notNull()
+    .references(() => user.id),
+  accessToken: text("accessToken"),
+  refreshToken: text("refreshToken"),
+  idToken: text("idToken"),
+  accessTokenExpiresAt: timestamp("accessTokenExpiresAt"),
+  refreshTokenExpiresAt: timestamp("refreshTokenExpiresAt"),
+  scope: text("scope"),
+  password: text("password"),
+  createdAt: timestamp("createdAt").notNull(),
+  updatedAt: timestamp("updatedAt").notNull(),
+});
+
+export const verification = pgTable("verification", {
+  id: text("id").primaryKey(),
+  identifier: text("identifier").notNull(),
+  value: text("value").notNull(),
+  expiresAt: timestamp("expiresAt").notNull(),
+  createdAt: timestamp("createdAt"),
+  updatedAt: timestamp("updatedAt"),
+});
+
+// ============================================
 // CARDS - Scryfall data
 // ============================================
 export const cards = pgTable(
@@ -78,7 +134,9 @@ export const drafts = pgTable("drafts", {
 
   isActive: boolean("is_active").default(true),
   createdAt: timestamp("created_at").defaultNow(),
-  createdBy: text("created_by").notNull(), // Better Auth user ID
+  createdBy: text("created_by")
+    .notNull()
+    .references(() => user.id),
 });
 
 // ============================================
@@ -88,7 +146,9 @@ export const userCards = pgTable(
   "user_cards",
   {
     id: uuid("id").defaultRandom().primaryKey(),
-    userId: text("user_id").notNull(), // Better Auth user ID
+    userId: text("user_id")
+      .notNull()
+      .references(() => user.id),
     cardId: uuid("card_id")
       .notNull()
       .references(() => cards.id),
@@ -97,6 +157,10 @@ export const userCards = pgTable(
     // User preferences
     isFoil: boolean("is_foil").default(false),
     quantity: integer("quantity").default(1),
+
+    // Sacrifice system
+    isSacrificed: boolean("is_sacrificed").default(false),
+    sacrificedAt: timestamp("sacrificed_at"),
 
     acquiredAt: timestamp("acquired_at").defaultNow(),
   },
@@ -113,7 +177,9 @@ export const decks = pgTable(
   "decks",
   {
     id: uuid("id").defaultRandom().primaryKey(),
-    userId: text("user_id").notNull(),
+    userId: text("user_id")
+      .notNull()
+      .references(() => user.id),
     draftId: uuid("draft_id").references(() => drafts.id), // null = uses global collection
 
     name: text("name").notNull(),
@@ -153,17 +219,31 @@ export const deckCards = pgTable(
 // ============================================
 // RELATIONS
 // ============================================
+export const userRelations = relations(user, ({ many }) => ({
+  drafts: many(drafts),
+  userCards: many(userCards),
+  decks: many(decks),
+}));
+
 export const cardsRelations = relations(cards, ({ many }) => ({
   userCards: many(userCards),
   deckCards: many(deckCards),
 }));
 
-export const draftsRelations = relations(drafts, ({ many }) => ({
+export const draftsRelations = relations(drafts, ({ one, many }) => ({
+  createdByUser: one(user, {
+    fields: [drafts.createdBy],
+    references: [user.id],
+  }),
   userCards: many(userCards),
   decks: many(decks),
 }));
 
 export const userCardsRelations = relations(userCards, ({ one }) => ({
+  user: one(user, {
+    fields: [userCards.userId],
+    references: [user.id],
+  }),
   card: one(cards, {
     fields: [userCards.cardId],
     references: [cards.id],
@@ -175,6 +255,10 @@ export const userCardsRelations = relations(userCards, ({ one }) => ({
 }));
 
 export const decksRelations = relations(decks, ({ one, many }) => ({
+  user: one(user, {
+    fields: [decks.userId],
+    references: [user.id],
+  }),
   draft: one(drafts, {
     fields: [decks.draftId],
     references: [drafts.id],
