@@ -16,6 +16,7 @@
   --color-success: #10b981;
   --color-warning: #f59e0b;
   --color-danger: #ef4444;
+  --color-scrollbar: #aeb5ca;
 
   /* Spacing */
   --space-xs: 0.25rem;
@@ -53,6 +54,7 @@
   --color-success: #22c55e;
   --color-warning: #fbbf24;
   --color-danger: #f87171;
+  --color-scrollbar: #4f4f4f;
 }
 
 /* === BASE RESET === */
@@ -83,15 +85,21 @@ body {
 /* Main Content */
 main {
   margin-top: 3px;
+  margin-right: 1px;
   padding: var(--space-2xl) var(--space-lg);
   height: calc(100vh - 4rem - 3px);
   overflow-y: auto;
   scrollbar-gutter: stable;
 }
 
-/* Scrollbar styling */
+/* Modern Scrollbar Standard */
+main {
+  scrollbar-color: var(--color-scrollbar) var(--color-bg);
+}
+
+/* Fallback Scrollbar styling */
 main::-webkit-scrollbar {
-  width: 12px;
+  width: 8px;
 }
 
 main::-webkit-scrollbar-track {
@@ -99,18 +107,12 @@ main::-webkit-scrollbar-track {
 }
 
 main::-webkit-scrollbar-thumb {
-  background: var(--color-border);
+  background: var(--color-scrollbar);
   border-radius: var(--radius);
 }
 
 main::-webkit-scrollbar-thumb:hover {
-  background: var(--color-text-muted);
-}
-
-/* Firefox */
-main {
-  scrollbar-color: var(--color-border) var(--color-bg);
-  scrollbar-width: thin;
+  background: var(--color-text);
 }
 
 /* === TYPOGRAPHY === */

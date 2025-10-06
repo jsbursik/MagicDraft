@@ -31,7 +31,7 @@
   }
 
   .nav-link.active {
-    background: var(--color-bg);
+    background: var(--color-border);
     color: var(--color-text);
   }
 </style>
