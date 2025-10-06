@@ -65,12 +65,15 @@
 }
 
 html {
+  height: 100%;
   font-size: 16px;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 body {
+  height: 100%;
+  overflow: hidden;
   font-family: var(--font-sans);
   line-height: var(--line-height);
   color: var(--color-text);
@@ -79,7 +82,35 @@ body {
 
 /* Main Content */
 main {
+  margin-top: 3px;
   padding: var(--space-2xl) var(--space-lg);
+  height: calc(100vh - 4rem - 3px);
+  overflow-y: auto;
+  scrollbar-gutter: stable;
+}
+
+/* Scrollbar styling */
+main::-webkit-scrollbar {
+  width: 12px;
+}
+
+main::-webkit-scrollbar-track {
+  background: var(--color-bg);
+}
+
+main::-webkit-scrollbar-thumb {
+  background: var(--color-border);
+  border-radius: var(--radius);
+}
+
+main::-webkit-scrollbar-thumb:hover {
+  background: var(--color-text-muted);
+}
+
+/* Firefox */
+main {
+  scrollbar-color: var(--color-border) var(--color-bg);
+  scrollbar-width: thin;
 }
 
 /* === TYPOGRAPHY === */
