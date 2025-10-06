@@ -21,6 +21,7 @@
         <NavLink href="/">Home</NavLink>
         <NavLink href="/inventory">Inventory</NavLink>
         <NavLink href="/deck-builder">Deck Builder</NavLink>
+        <NavLink href="/css-demo">CSS Demo</NavLink>
       </div>
     </div>
 
