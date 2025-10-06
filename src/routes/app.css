@@ -90,10 +90,6 @@ main {
   height: calc(100vh - 4rem - 3px);
   overflow-y: auto;
   scrollbar-gutter: stable;
-}
-
-/* Modern Scrollbar Standard */
-main {
   scrollbar-color: var(--color-scrollbar) var(--color-bg);
 }
 
