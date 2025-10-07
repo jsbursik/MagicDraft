@@ -3,38 +3,41 @@
   import { sessionStore } from "$lib/stores/session";
   import { goto } from "$app/navigation";
 
-  let email = $state("");
-  let password = $state("");
-  let error = $state("");
-  let loading = false;
+  import Input from "$components/form-components/input.svelte";
+  import { toast } from "$lib/stores/toast";
 
-  let emailTouched = $state(false);
-  let emailValidity = $state(false);
-  let passTouched = $state(false);
-  let passValidity = $state(false);
+  let email = $state("");
+  let emailValid = $state(false);
+  let password = $state("");
+  let passValid = $state(false);
+
+  let isValid = $derived(emailValid && passValid);
+
+  let loading = false;
 
   async function handleLogin(e: Event) {
     e.preventDefault();
     loading = true;
-    error = "";
 
-    try {
-      await authClient.signIn.email({
-        email,
-        password,
-      });
+    const response = await authClient.signIn.email({
+      email,
+      password,
+    });
 
-      // Update the SessionData store
-      const { data } = await authClient.getSession();
-      sessionStore.set(data);
-
-      // Redirect after successful login
-      goto("/");
-    } catch (e: any) {
-      error = e.message || "Login failed";
-    } finally {
+    if (response.error) {
+      toast.show(response.error.message || "Login failed", "danger");
       loading = false;
+      return;
     }
+
+    // Update the SessionData store
+    const { data } = await authClient.getSession();
+    sessionStore.set(data);
+
+    // Redirect after successful login
+    toast.show("Login successful!", "success");
+    goto("/");
+    loading = false;
   }
 </script>
 
@@ -44,37 +47,14 @@
       <h1 class="center-text">Login</h1>
       <div>
         <label for="email">Email:</label>
-        <input
-          type="email"
-          name="email"
-          id="email"
-          class:invalid={emailTouched && !emailValidity}
-          bind:value={email}
-          placeholder="email@example.com"
-          required
-          onblur={() => (emailTouched = true)}
-          oninput={(e) => (emailValidity = e.currentTarget.checkValidity())}
-        />
+        <Input type="email" name="email" id="email" bind:value={email} bind:valid={emailValid} placeholder="email@example.com" required />
       </div>
       <div>
         <label for="password">Password:</label>
-        <input
-          type="password"
-          name="password"
-          id="password"
-          class:invalid={passTouched && !passValidity}
-          bind:value={password}
-          placeholder="Enter your Password"
-          required
-          onblur={() => (passTouched = true)}
-          oninput={(e) => (passValidity = e.currentTarget.checkValidity())}
-        />
+        <Input type="password" name="password" id="password" bind:value={password} bind:valid={passValid} placeholder="Enter Your Password" required />
       </div>
-      {#if error}
-        <p class="error">{error}</p>
-      {/if}
       <div>
-        <button type="submit" class="m-auto w-100" style="margin-top: 1rem;">Login</button>
+        <button type="submit" class="m-auto w-100" style="margin-top: 1rem;" disabled={!isValid}>Login</button>
       </div>
     </form>
   </div>
@@ -91,7 +71,7 @@
   }
 
   .error {
-    color: red;
+    color: var(--color-danger);
     margin: 1rem 0;
   }
 </style>
