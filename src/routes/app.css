@@ -11,12 +11,13 @@
   --color-border: #e5e7eb;
   --color-text: #1a1a1a;
   --color-text-muted: #6b7280;
-  --color-primary: #2563eb;
+  --color-primary: #5087ff;
   --color-primary-hover: #1d4ed8;
-  --color-success: #10b981;
-  --color-warning: #f59e0b;
-  --color-danger: #ef4444;
-  --color-scrollbar: #aeb5ca;
+  --color-success: #13da98;
+  --color-warning: #fdad23;
+  --color-danger: #ff6565;
+  --color-scrollbar: #8a8b8d;
+  --color-input-bg: var(--color-surface);
 
   /* Spacing */
   --space-xs: 0.25rem;
@@ -44,9 +45,9 @@
 /* === DARK MODE === */
 :root[data-theme="dark"] {
   /* Colors - Dark Mode */
-  --color-bg: #0a0a0a;
-  --color-surface: #171717;
-  --color-border: #262626;
+  --color-bg: #161616;
+  --color-surface: #252525;
+  --color-border: #363636;
   --color-text: #ededed;
   --color-text-muted: #a3a3a3;
   --color-primary: #3b82f6;
@@ -55,6 +56,7 @@
   --color-warning: #fbbf24;
   --color-danger: #f87171;
   --color-scrollbar: #4f4f4f;
+  --color-input-bg: #0d0d0d;
 }
 
 /* === BASE RESET === */
@@ -234,7 +236,7 @@ select {
   font-size: 1rem;
   border: 1px solid var(--color-border);
   border-radius: var(--radius);
-  background: var(--color-surface);
+  background: var(--color-input-bg);
   color: var(--color-text);
   transition: var(--transition);
 }
@@ -309,7 +311,7 @@ button:disabled {
 
 a.button,
 a.button:hover {
-  color: inherit;
+  color: white;
   text-decoration: none;
 }
 
@@ -489,7 +491,6 @@ tbody tr:hover {
 .btn-success {
   background: color-mix(in srgb, var(--color-success) 85%, white);
   border-color: var(--color-success);
-  color: color-mix(in srgb, var(--color-success) 40%, black) !important;
 
   &:hover {
     background: color-mix(in srgb, var(--color-success) 40%, white);
@@ -499,7 +500,6 @@ tbody tr:hover {
 .btn-warning {
   background: color-mix(in srgb, var(--color-warning) 85%, white);
   border-color: var(--color-warning);
-  color: color-mix(in srgb, var(--color-warning) 40%, black) !important;
 
   &:hover {
     background: color-mix(in srgb, var(--color-warning) 40%, white);
@@ -509,7 +509,6 @@ tbody tr:hover {
 .btn-danger {
   background: color-mix(in srgb, var(--color-danger) 85%, white);
   border-color: var(--color-danger);
-  color: color-mix(in srgb, var(--color-danger) 40%, black) !important;
 
   &:hover {
     background: color-mix(in srgb, var(--color-danger) 40%, white);
