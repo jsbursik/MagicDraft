@@ -1,5 +1,5 @@
 // db/schema.ts
-import { pgTable, text, integer, timestamp, boolean, jsonb, uuid, primaryKey, index } from "drizzle-orm/pg-core";
+import { pgTable, text, integer, real, timestamp, boolean, jsonb, uuid, primaryKey, index } from "drizzle-orm/pg-core";
 import { relations } from "drizzle-orm";
 
 // ============================================
@@ -74,7 +74,7 @@ export const cards = pgTable(
 
     // Card details
     manaCost: text("mana_cost"),
-    cmc: integer("cmc"),
+    cmc: real("cmc"),
     typeLine: text("type_line").notNull(),
     oracleText: text("oracle_text"),
     power: text("power"),

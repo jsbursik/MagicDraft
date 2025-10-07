@@ -1,0 +1,1 @@
+ALTER TABLE "cards" ALTER COLUMN "cmc" SET DATA TYPE real;
