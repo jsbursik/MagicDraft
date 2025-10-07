@@ -11,6 +11,7 @@
   async function handleLogout() {
     await authClient.signOut();
     sessionStore.set(null);
+    userMenuOpen = false;
     goto("/");
   }
 </script>
