@@ -253,6 +253,10 @@ input[type="radio"] {
   margin-right: var(--space-sm);
 }
 
+.invalid {
+  border-color: var(--color-danger);
+}
+
 label {
   display: block;
   margin-bottom: var(--space-sm);
@@ -307,6 +311,12 @@ button:disabled {
   transform: none;
 }
 
+a.button,
+a.button:hover {
+  color: inherit;
+  text-decoration: none;
+}
+
 /* === TABLES === */
 table {
   width: 100%;
@@ -345,6 +355,14 @@ tbody tr:hover {
 }
 
 /* === UTILITY CLASSES === */
+
+.m-auto {
+  margin: 0 auto;
+}
+
+.w-100 {
+  width: 100%;
+}
 
 /* Card */
 .card {
@@ -469,4 +487,35 @@ tbody tr:hover {
   background: rgba(239, 68, 68, 0.1);
   border-color: var(--color-danger);
   color: var(--color-danger);
+}
+
+/* Buttons */
+.btn-success {
+  background: color-mix(in srgb, var(--color-success) 85%, white);
+  border-color: var(--color-success);
+  color: color-mix(in srgb, var(--color-success) 40%, black) !important;
+
+  &:hover {
+    background: color-mix(in srgb, var(--color-success) 40%, white);
+  }
+}
+
+.btn-warning {
+  background: color-mix(in srgb, var(--color-warning) 85%, white);
+  border-color: var(--color-warning);
+  color: color-mix(in srgb, var(--color-warning) 40%, black) !important;
+
+  &:hover {
+    background: color-mix(in srgb, var(--color-warning) 40%, white);
+  }
+}
+
+.btn-danger {
+  background: color-mix(in srgb, var(--color-danger) 85%, white);
+  border-color: var(--color-danger);
+  color: color-mix(in srgb, var(--color-danger) 40%, black) !important;
+
+  &:hover {
+    background: color-mix(in srgb, var(--color-danger) 40%, white);
+  }
 }

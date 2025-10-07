@@ -95,6 +95,18 @@ function hello() {
 
   <hr />
 
+  <!-- Buttons Demo -->
+  <section>
+    <h2>Buttons</h2>
+
+    <button>Default</button>
+    <button class="btn-success">Success</button>
+    <button class="btn-warning">Warning</button>
+    <button class="btn-danger">Danger</button>
+  </section>
+
+  <hr />
+
   <!-- Forms Demo -->
   <section>
     <h2>Forms</h2>
