@@ -1,10 +1,18 @@
 <script>
   import { IconCardsFilled, IconUser } from "@tabler/icons-svelte";
   import NavLink from "./nav-link.svelte";
-
-  let { user = null, ...props } = $props();
+  import { sessionStore } from "$lib/stores/session";
+  import { authClient } from "$lib/auth-client";
+  import { goto } from "$app/navigation";
 
   let userMenuOpen = $state(false);
+  let user = $derived($sessionStore?.user);
+
+  async function handleLogout() {
+    await authClient.signOut();
+    sessionStore.set(null);
+    goto("/");
+  }
 </script>
 
 <!-- Top Navigation -->
@@ -21,8 +29,8 @@
       <!-- Navigation Links -->
       <div class="nav-links">
         <NavLink href="/">Home</NavLink>
-        <NavLink href="/inventory">Inventory</NavLink>
-        <NavLink href="/deck-builder">Deck Builder</NavLink>
+        {#if user}<NavLink href="/inventory">Inventory</NavLink>{/if}
+        {#if user}<NavLink href="/deck-builder">Deck Builder</NavLink>{/if}
         <NavLink href="/css-demo">CSS Demo</NavLink>
       </div>
     </div>
@@ -42,7 +50,7 @@
             <button class="dropdown-item">Settings</button>
             <button class="dropdown-item">Admin Panel</button>
             <hr />
-            <button class="dropdown-item danger">Logout</button>
+            <button class="dropdown-item danger" onclick={handleLogout}>Logout</button>
           </div>
         {/if}
       </div>

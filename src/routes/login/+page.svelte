@@ -1,5 +1,6 @@
 <script lang="ts">
   import { authClient } from "$lib/auth-client";
+  import { sessionStore } from "$lib/stores/session";
   import { goto } from "$app/navigation";
 
   let email = $state("");
@@ -22,6 +23,10 @@
         email,
         password,
       });
+
+      // Update the SessionData store
+      const { data } = await authClient.getSession();
+      sessionStore.set(data);
 
       // Redirect after successful login
       goto("/");
