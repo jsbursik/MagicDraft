@@ -38,22 +38,25 @@
 
     <!-- User Menu -->
     {#if user}
-      <div class="user-menu-wrapper">
-        <button onclick={() => (userMenuOpen = !userMenuOpen)} class="user-avatar">
-          <div class="avatar-circle">
-            <IconUser size={20} class="avatar-icon" />
-          </div>
-        </button>
+      <div class="cluster">
+        <div>{user.name}</div>
+        <div class="user-menu-wrapper">
+          <button onclick={() => (userMenuOpen = !userMenuOpen)} class="user-avatar">
+            <div class="avatar-circle">
+              <IconUser size={20} class="avatar-icon" />
+            </div>
+          </button>
 
-        <!-- Dropdown Menu -->
-        {#if userMenuOpen}
-          <div class="dropdown-menu">
-            <button class="dropdown-item">Settings</button>
-            <button class="dropdown-item">Admin Panel</button>
-            <hr />
-            <button class="dropdown-item danger" onclick={handleLogout}>Logout</button>
-          </div>
-        {/if}
+          <!-- Dropdown Menu -->
+          {#if userMenuOpen}
+            <div class="dropdown-menu">
+              <button class="dropdown-item">Settings</button>
+              <button class="dropdown-item">Admin Panel</button>
+              <hr />
+              <button class="dropdown-item danger" onclick={handleLogout}>Logout</button>
+            </div>
+          {/if}
+        </div>
       </div>
     {:else}
       <div class="cluster">
