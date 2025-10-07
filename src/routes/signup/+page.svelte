@@ -21,12 +21,10 @@
   let passMatch = $state(true);
   let isValid = $derived(Object.values(formValidity).every((v) => v) && passMatch);
 
-  let error = $state("");
   let loading = $state(false);
 
   async function handleSignup() {
     loading = true;
-    error = "";
     let name = formValues.name;
     let email = formValues.email;
     let password = formValues.password;
@@ -105,39 +103,6 @@
   </div>
 </div>
 
-<!-- <div class="auth-container">
-  <h1>Sign Up</h1>
-
-  <form on:submit|preventDefault={handleSignup}>
-    <div>
-      <label for="name">Name</label>
-      <input id="name" type="text" bind:value={name} required />
-    </div>
-
-    <div>
-      <label for="email">Email</label>
-      <input id="email" type="email" bind:value={email} required />
-    </div>
-
-    <div>
-      <label for="password">Password</label>
-      <input id="password" type="password" bind:value={password} required minlength="8" />
-    </div>
-
-    {#if error}
-      <p class="error">{error}</p>
-    {/if}
-
-    <button type="submit" disabled={loading}>
-      {loading ? "Creating account..." : "Sign Up"}
-    </button>
-  </form>
-
-  <p>
-    Already have an account? <a href="/login">Log in</a>
-  </p>
-</div> -->
-
 <style>
   .auth-container {
     max-width: 400px;
@@ -145,39 +110,9 @@
     padding: 2rem;
   }
 
-  /* form > div {
-    margin-bottom: 1rem;
-  }
-
-  label {
-    display: block;
-    margin-bottom: 0.5rem;
-  }
-
-  input {
-    width: 100%;
-    padding: 0.5rem;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-  }
-
-  button {
-    width: 100%;
-    padding: 0.75rem;
-    background: #007bff;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-
-  button:disabled {
-    opacity: 0.6;
-    cursor: not-allowed;
-  } */
-
   .error {
-    color: red;
+    font-size: 0.8rem;
+    color: var(--color-danger);
     margin: 1rem 0;
   }
 </style>
