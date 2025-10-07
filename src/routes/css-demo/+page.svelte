@@ -1,5 +1,6 @@
 <script>
   import ModeToggle from "$components/mode-toggle.svelte";
+  import { toast } from "$lib/stores/toast";
 </script>
 
 <div class="center">
@@ -103,6 +104,19 @@ function hello() {
     <button class="btn-success">Success</button>
     <button class="btn-warning">Warning</button>
     <button class="btn-danger">Danger</button>
+  </section>
+
+  <hr />
+
+  <!-- Toast Demo -->
+
+  <section>
+    <h2>Toasts</h2>
+    <button onclick={() => toast.show("Info!", "info")}>Info</button>
+    <button onclick={() => toast.show("Success!", "success")} class="btn-success">Success</button>
+    <button onclick={() => toast.show("Warning!", "warning")} class="btn-warning">Warning</button>
+    <button onclick={() => toast.show("Danger!", "danger")} class="btn-danger">Danger</button>
+    <button onclick={() => toast.show("Long delay", "info", 100000)}>Long Delay</button>
   </section>
 
   <hr />
