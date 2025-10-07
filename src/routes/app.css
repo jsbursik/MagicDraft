@@ -362,6 +362,13 @@ tbody tr:hover {
   width: 100%;
 }
 
+/* Auth Container */
+.auth-container {
+  max-width: 400px;
+  margin: 2rem auto;
+  padding: 2rem;
+}
+
 /* Card */
 .card {
   background: var(--color-surface);

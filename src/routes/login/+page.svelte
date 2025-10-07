@@ -62,16 +62,3 @@
     <a href="/signup">Don't have an account?</a>
   </div>
 </div>
-
-<style>
-  .auth-container {
-    max-width: 400px;
-    margin: 2rem auto;
-    padding: 2rem;
-  }
-
-  .error {
-    color: var(--color-danger);
-    margin: 1rem 0;
-  }
-</style>

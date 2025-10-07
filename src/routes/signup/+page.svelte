@@ -105,12 +105,6 @@
 </div>
 
 <style>
-  .auth-container {
-    max-width: 400px;
-    margin: 2rem auto;
-    padding: 2rem;
-  }
-
   .error {
     font-size: 0.8rem;
     color: var(--color-danger);
