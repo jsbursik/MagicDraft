@@ -1,6 +1,7 @@
 <script lang="ts">
   import { authClient } from "$lib/auth-client";
   import { goto } from "$app/navigation";
+
   import Input from "$components/form-components/input.svelte";
   import { toast } from "$lib/stores/toast";
 
