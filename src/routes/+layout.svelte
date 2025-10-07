@@ -3,34 +3,16 @@
   import favicon from "$lib/assets/favicon.svg";
   import TopNav from "../components/nav/nav.svelte";
 
-  import { onMount } from "svelte";
-  import { authClient } from "$lib/auth-client";
+  let { data, children } = $props();
 
-  let session = $state<any>(null);
-
-  let { children } = $props();
-
-  onMount(async () => {
-    const { data } = await authClient.getSession();
-    session = data;
-  });
+  const session = data.session;
 </script>
 
 <svelte:head>
   <link rel="icon" href={favicon} />
 </svelte:head>
 
-<nav>
-  {#if session?.user}
-    <p>Welcome, {session.user.name}!</p>
-    <button onclick={() => authClient.signOut()}>Log Out</button>
-  {:else}
-    <a href="/login">Log In</a>
-    <a href="/signup">Sign Up</a>
-  {/if}
-</nav>
-
-<TopNav />
+<TopNav user={session?.user} />
 <main>
   {@render children?.()}
 </main>
