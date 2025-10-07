@@ -7,7 +7,6 @@
   <header class="center-text">
     <h1>Semantic CSS Framework</h1>
     <p>A lightweight, semantic-first CSS framework that makes HTML beautiful by default.</p>
-    <ModeToggle />
   </header>
 
   <hr />

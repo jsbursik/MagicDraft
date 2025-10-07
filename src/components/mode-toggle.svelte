@@ -1,4 +1,5 @@
 <script>
+  import { IconSunFilled, IconMoonFilled } from "@tabler/icons-svelte";
   import { onMount } from "svelte";
 
   let theme = "light";
@@ -18,6 +19,29 @@
   }
 </script>
 
-<button on:click={toggleTheme}>
-  Toggle {theme === "light" ? "Dark" : "Light"} Mode
+<button on:click={toggleTheme} class="mode-toggle">
+  {#if theme === "dark"}
+    <IconSunFilled />
+  {:else}
+    <IconMoonFilled />
+  {/if}
 </button>
+
+<style>
+  button {
+    position: absolute;
+    bottom: 1rem;
+    right: 1rem;
+
+    display: grid;
+    place-items: center;
+
+    height: 3rem;
+    width: 3rem;
+    padding: 0.5rem;
+    border-radius: 100%;
+
+    background: var(--color-border);
+    color: var(--color-text);
+  }
+</style>

@@ -6,6 +6,7 @@
   import { sessionStore } from "$lib/stores/session";
   import { toast } from "$lib/stores/toast";
   import { onMount } from "svelte";
+  import ModeToggle from "$components/mode-toggle.svelte";
 
   let { data, children } = $props();
 
@@ -28,6 +29,8 @@
     <Toast toast={toastItem} onDismiss={() => toast.dismiss(toastItem.id)} />
   {/each}
 </div>
+
+<ModeToggle />
 
 <style>
   .toast-container {
