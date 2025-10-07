@@ -294,13 +294,11 @@ button,
 }
 
 button:hover,
-.button:hover {
-  background: var(--color-primary-hover);
-  box-shadow: var(--shadow-md);
-}
-
+.button:hover,
 button:active,
 .button:active {
+  background: var(--color-primary-hover);
+  box-shadow: var(--shadow-md);
 }
 
 button:disabled {
