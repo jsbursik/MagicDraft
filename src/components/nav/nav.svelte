@@ -2,6 +2,8 @@
   import { IconCardsFilled, IconUser } from "@tabler/icons-svelte";
   import NavLink from "./nav-link.svelte";
 
+  let { user = null, ...props } = $props();
+
   let userMenuOpen = $state(false);
 </script>
 
@@ -26,23 +28,30 @@
     </div>
 
     <!-- User Menu -->
-    <div class="user-menu-wrapper">
-      <button onclick={() => (userMenuOpen = !userMenuOpen)} class="user-avatar">
-        <div class="avatar-circle">
-          <IconUser size={20} class="avatar-icon" />
-        </div>
-      </button>
+    {#if user}
+      <div class="user-menu-wrapper">
+        <button onclick={() => (userMenuOpen = !userMenuOpen)} class="user-avatar">
+          <div class="avatar-circle">
+            <IconUser size={20} class="avatar-icon" />
+          </div>
+        </button>
 
-      <!-- Dropdown Menu -->
-      {#if userMenuOpen}
-        <div class="dropdown-menu">
-          <button class="dropdown-item">Settings</button>
-          <button class="dropdown-item">Admin Panel</button>
-          <hr />
-          <button class="dropdown-item danger">Logout</button>
-        </div>
-      {/if}
-    </div>
+        <!-- Dropdown Menu -->
+        {#if userMenuOpen}
+          <div class="dropdown-menu">
+            <button class="dropdown-item">Settings</button>
+            <button class="dropdown-item">Admin Panel</button>
+            <hr />
+            <button class="dropdown-item danger">Logout</button>
+          </div>
+        {/if}
+      </div>
+    {:else}
+      <div class="cluster">
+        <a class="button btn-success" href="/login">Login</a>
+        <a class="button" href="/signup">Sign Up</a>
+      </div>
+    {/if}
   </div>
 </nav>
 
