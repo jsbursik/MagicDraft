@@ -6,4 +6,4 @@ type SessionData = {
   user: User;
 };
 
-export const sessionStore = writable<SessionData | null>();
+export const sessionStore = writable<SessionData | null>(null);
