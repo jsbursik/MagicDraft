@@ -521,3 +521,7 @@ tbody tr:hover {
     background: color-mix(in srgb, var(--color-danger) 40%, white);
   }
 }
+
+.mtg-card {
+  height: 330px;
+}
