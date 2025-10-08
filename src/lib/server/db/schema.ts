@@ -100,6 +100,14 @@ export const cards = pgTable(
       border_crop: string;
     }>(),
 
+    // Proxy Images
+    proxyImageUrl: text("proxy_image_url"),
+    proxySourceId: text("proxy_source_id"), // Which source provided the image
+    proxyPriority: integer("proxy_priority"), // Priority of the source
+    proxyArtist: text("proxy_artist"), // Artist from proxy filename
+    proxySetCode: text("proxy_set_code"), // Set code if available in filename
+    proxyLastIndexed: timestamp("proxy_last_indexed"),
+
     // Metadata
     artist: text("artist"),
     flavorText: text("flavor_text"),
