@@ -27,3 +27,6 @@ vite.config.ts.timestamp-*
 
 # Card JSON
 default-cards.json
+
+# Google API Creds
+draftbox-creds.json
