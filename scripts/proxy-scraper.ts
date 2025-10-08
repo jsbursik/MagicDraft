@@ -1,0 +1,2 @@
+const JOHN_PRIME_BORDERLESS = "1O7t2uQXu9Ypzgn05mMwjzwRs7OyhM2sT";
+const POZZUM_EXTENDED = "1i-VF3HfkmnYT8la5hacHYxOhHcs-DghY";
