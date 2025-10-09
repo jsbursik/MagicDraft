@@ -8,15 +8,23 @@
       normal: string;
       small: string;
       large: string;
-      png: string;
     } | null;
     set: string;
     rarity: string;
     typeLine: string;
+    proxyImageUrl?: string;
+    proxySourceId?: string;
   }
 
   let cards: Card[] = [];
   let loading = true;
+
+  function getCardImage(c: Card): string | undefined {
+    if (c.proxyImageUrl) {
+      return (c.proxyImageUrl += "=s400");
+    }
+    return c.imageUris?.normal;
+  }
 
   onMount(async () => {
     const response = await fetch("/api/cards/random");
@@ -32,7 +40,7 @@
       {:else}
         {#each cards as card}
           {#if card.imageUris?.normal}
-            <img src={card.imageUris.png} alt={card.name} class="mtg-card" loading="lazy" />
+            <img src={getCardImage(card)} alt={card.name} class="mtg-card" loading="lazy" />
           {:else}
             <div class="no-image">{card.name}</div>
           {/if}

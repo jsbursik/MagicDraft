@@ -4,6 +4,7 @@ export interface ProxySource {
   driveId: string;
   priority: number;
   folderFilter?: RegExp;
+  folderFilterMode?: "include" | "exclude";
   filenameParser: (filename: string) => {
     cardName: string;
     artist?: string;
@@ -37,7 +38,8 @@ export const PROXY_SOURCES: ProxySource[] = [
     name: "Pozzum Collection",
     driveId: "1i-VF3HfkmnYT8la5hacHYxOhHcs-DghY",
     priority: 2,
-    folderFilter: /^([0-9]{2}_|[A-S][0-9]{2}_)/i,
+    folderFilter: /tokens|z\d{2}_.+|!_.+/i,
+    folderFilterMode: "exclude",
     filenameParser: (filename: string) => {
       const match = filename.match(/^(.+?)\s+\(Extended\s+(.+?)\)\.(?:jpg|png)$/i);
 

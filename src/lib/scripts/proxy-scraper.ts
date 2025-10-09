@@ -40,9 +40,14 @@ async function listFilesRecursive(folderId: string, source: ProxySource, folderP
       const folderName = file.name;
 
       // Apply folder filter if defined
-      if (source.folderFilter && !source.folderFilter.test(folderName)) {
-        console.log(`   ⏭️  Skipping folder: ${folderPath}/${folderName}`);
-        continue;
+      if (source.folderFilter) {
+        const mode = source.folderFilterMode || "include";
+        const matches = source.folderFilter.test(folderName);
+
+        if ((mode === "include" && !matches) || (mode === "exclude" && matches)) {
+          console.log(`   ⏭️  Skipping folder: ${folderPath}/${folderName}`);
+          continue;
+        }
       }
 
       console.log(`   📁 Scanning folder: ${folderPath}/${folderName}`);
@@ -87,14 +92,25 @@ async function indexSource(source: ProxySource) {
     }
 
     // Build query to find matching card(s)
-    const whereClause = parsed.setCode ? and(eq(cards.name, parsed.cardName), eq(cards.set, parsed.setCode.toLowerCase())) : eq(cards.name, parsed.cardName);
+    let whereClause;
+
+    if (parsed.setCode) {
+      // Best case: name + set code = exact match
+      whereClause = and(eq(cards.name, parsed.cardName), eq(cards.set, parsed.setCode.toLowerCase()));
+    } else if (parsed.artist) {
+      // Fallback: name + artist to get the specific printing
+      whereClause = and(eq(cards.name, parsed.cardName), eq(cards.artist, parsed.artist));
+    } else {
+      // Last resort: just name (will match multiple, but that's the best we can do)
+      whereClause = eq(cards.name, parsed.cardName);
+    }
 
     const matchingCards = await db.select().from(cards).where(whereClause);
 
     if (matchingCards.length === 0) {
       unmatched++;
       if (unmatched % 100 === 0) {
-        console.log(`   ❌ ${unmatched} unmatched so far... (e.g., "${parsed.cardName}")`);
+        console.log(`   ❌ ${unmatched} unmatched so far... (e.g., "${parsed.cardName}" by ${parsed.artist || "unknown artist"})`);
       }
       continue;
     }

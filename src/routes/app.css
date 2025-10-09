@@ -523,5 +523,9 @@ tbody tr:hover {
 }
 
 .mtg-card {
-  height: 330px;
+  height: 260px;
+  aspect-ratio: 5 / 7;
+  object-fit: cover;
+  object-position: center;
+  border-radius: 4.5%;
 }
