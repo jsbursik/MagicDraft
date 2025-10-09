@@ -1,13 +1,18 @@
 import { google } from "googleapis";
-import { db } from "$lib/server/db";
+import { drizzle } from "drizzle-orm/postgres-js";
+import postgres from "postgres";
 import { cards } from "$lib/server/db/schema";
 import { eq, and, sql } from "drizzle-orm";
 import { PROXY_SOURCES, type ProxySource } from "./proxy-sources";
+import "dotenv/config";
+
+const client = postgres(process.env.DATABASE_URL!);
+export const db = drizzle(client);
 
 const drive = google.drive({
   version: "v3",
   auth: new google.auth.GoogleAuth({
-    keyFile: "./draftbox_creds.json",
+    keyFile: "./draftbox-creds.json",
     scopes: ["https://www.googleapis.com/auth/drive.readonly"],
   }),
 });
