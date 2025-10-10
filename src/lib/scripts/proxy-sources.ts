@@ -38,7 +38,7 @@ export const PROXY_SOURCES: ProxySource[] = [
     name: "Pozzum Collection",
     driveId: "1i-VF3HfkmnYT8la5hacHYxOhHcs-DghY",
     priority: 2,
-    folderFilter: /tokens|z\d{2}_.+|!_.+/i,
+    folderFilter: /tokens|z\d{2}_.+|!_.+|paper/i,
     folderFilterMode: "exclude",
     filenameParser: (filename: string) => {
       const match = filename.match(/^(.+?)\s+\(Extended\s+(.+?)\)\.(?:jpg|png)$/i);
